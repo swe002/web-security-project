@@ -1,0 +1,21 @@
+{
+  "name": "cyberseclab",
+  "version": "1.0.0",
+  "description": "Vulnerable Cybersecurity Lab web application for educational testing.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "cybersecurity",
+    "vulnerable-app",
+    "owasp-top-10"
+  ],
+  "author": "Antigravity",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "sqlite3": "^5.1.7"
+  }
+}

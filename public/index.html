@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSecLab - Vulnerable Training Environment</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="cyber-theme">
+
+    <!-- Glowing Background Elements -->
+    <div class="cyber-glow-1"></div>
+    <div class="cyber-glow-2"></div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-shield-halved brand-icon text-glow-red"></i>
+                <div class="brand-text">
+                    <h1>CYBER<span class="text-red">SEC</span>LAB</h1>
+                    <span class="subtitle">Vulnerability Lab v1.0</span>
+                </div>
+            </div>
+            
+            <div class="status-panel">
+                <div class="status-indicator">
+                    <span class="pulse-red"></span>
+                    <span class="status-label">STATUS: VULNERABLE</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#dashboard" class="nav-item active" data-tab="dashboard">
+                    <i class="fa-solid fa-chart-line"></i><span>Dashboard</span>
+                </a>
+                <div class="nav-section-title">Vulnerabilities</div>
+                <a href="#sqli" class="nav-item" data-tab="sqli">
+                    <i class="fa-solid fa-database"></i><span>SQL Injection</span>
+                </a>
+                <a href="#xss" class="nav-item" data-tab="xss">
+                    <i class="fa-solid fa-code"></i><span>Cross-Site Scripting</span>
+                </a>
+                <a href="#auth" class="nav-item" data-tab="auth">
+                    <i class="fa-solid fa-user-lock"></i><span>Broken Auth</span>
+                </a>
+                <a href="#ping" class="nav-item" data-tab="ping">
+                    <i class="fa-solid fa-terminal"></i><span>Command Injection</span>
+                </a>
+                <a href="#idor" class="nav-item" data-tab="idor">
+                    <i class="fa-solid fa-file-invoice-dollar"></i><span>IDOR</span>
+                </a>
+                <div class="nav-section-title">Resources</div>
+                <a href="#guide" class="nav-item" data-tab="guide">
+                    <i class="fa-solid fa-book-open-reader"></i><span>Tools Setup Guide</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <p>For Educational Testing Only</p>
+                <p class="warning-text">DO NOT DEPLOY IN PROD</p>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="page-title-container">
+                    <h2 id="current-page-title">Lab Dashboard</h2>
+                    <p id="current-page-subtitle">Select a target vulnerability from the sidebar to begin testing.</p>
+                </div>
+                <div class="topbar-actions">
+                    <button class="btn btn-outline" id="toggle-hints">
+                        <i class="fa-solid fa-lightbulb"></i> Hints & Tools Panel
+                    </button>
+                </div>
+            </header>
+
+            <!-- Inner Scrollable Pane -->
+            <div class="scroll-pane">
+                
+                <!-- TAB: DASHBOARD -->
+                <section id="tab-dashboard" class="tab-content active">
+                    <div class="dashboard-hero">
+                        <div class="hero-text">
+                            <h3>Welcome to the Cybersecurity Vulnerability Lab</h3>
+                            <p>This sandbox is built intentionally weak to help you practice black-box testing, source code audits, packet sniffing, and request tampering using standard industry tools.</p>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-card">
+                                <span class="stat-num text-red">5</span>
+                                <span class="stat-label">Active Vulnerabilities</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-num text-cyan">6</span>
+                                <span class="stat-label">Supported Tools</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2col">
+                        <!-- Lab Card: SQLi -->
+                        <div class="lab-overview-card">
+                            <div class="card-icon text-glow-cyan"><i class="fa-solid fa-database"></i></div>
+                            <h4>SQL Injection (SQLi)</h4>
+                            <p>Query a mock database with unescaped input. Extract passwords and hidden schemas using boolean, error, or union-based payloads.</p>
+                            <button class="btn btn-small btn-primary" onclick="switchTab('sqli')">Enter Lab</button>
+                        </div>
+
+                        <!-- Lab Card: XSS -->
+                        <div class="lab-overview-card">
+                            <div class="card-icon text-glow-cyan"><i class="fa-solid fa-code"></i></div>
+                            <h4>Cross-Site Scripting (XSS)</h4>
+                            <p>Test both Reflected and Stored XSS fields. Craft payloads to steal session cookies, hijack requests, or modify site styling.</p>
+                            <button class="btn btn-small btn-primary" onclick="switchTab('xss')">Enter Lab</button>
+                        </div>
+
+                        <!-- Lab Card: Broken Auth -->
+                        <div class="lab-overview-card">
+                            <div class="card-icon text-glow-cyan"><i class="fa-solid fa-user-lock"></i></div>
+                            <h4>Broken Authentication</h4>
+                            <p>Exploit user enumeration error messages, perform a credential dictionary attack, and bypass admin checks via cookie tampering.</p>
+                            <button class="btn btn-small btn-primary" onclick="switchTab('auth')">Enter Lab</button>
+                        </div>
+
+                        <!-- Lab Card: Command Injection -->
+                        <div class="lab-overview-card">
+                            <div class="card-icon text-glow-cyan"><i class="fa-solid fa-terminal"></i></div>
+                            <h4>Command Injection</h4>
+                            <p>Execute shell command chains directly inside the Linux container file system. Read configuration files and scan the system.</p>
+                            <button class="btn btn-small btn-primary" onclick="switchTab('ping')">Enter Lab</button>
+                        </div>
+
+                        <!-- Lab Card: IDOR -->
+                        <div class="lab-overview-card">
+                            <div class="card-icon text-glow-cyan"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                            <h4>Insecure Direct Object References</h4>
+                            <p>Bypass authorization filters by iterating invoice numeric indices and exposing critical administrative financial files.</p>
+                            <button class="btn btn-small btn-primary" onclick="switchTab('idor')">Enter Lab</button>
+                        </div>
+
+                        <!-- Lab Card: Docker Environment info -->
+                        <div class="lab-overview-card highlighted-card">
+                            <div class="card-icon text-glow-red"><i class="fa-brands fa-docker"></i></div>
+                            <h4>Docker Environment</h4>
+                            <p>This lab environment is encapsulated in Docker, enabling safe and clean network isolation on port 3000. Perfect for Wireshark and nmap.</p>
+                            <button class="btn btn-small btn-outline" onclick="switchTab('guide')">Docker Setup</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: SQL INJECTION (SQLi) -->
+                <section id="tab-sqli" class="tab-content">
+                    <div class="lab-container">
+                        <div class="lab-interactive">
+                            <div class="card">
+                                <h3>User Directory Search</h3>
+                                <p class="card-description">Search for registered users by their username. The database is SQLite and contains active users.</p>
+                                
+                                <div class="form-group row-group">
+                                    <input type="text" id="sqli-search-input" placeholder="Enter username (e.g. alice, bob)..." class="form-input">
+                                    <button class="btn btn-primary" id="btn-sqli-search"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                                </div>
+
+                                <div class="results-container">
+                                    <h5>Search Results</h5>
+                                    <div id="sqli-results-table-wrapper" class="table-wrapper">
+                                        <table class="data-table" id="sqli-results-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Username</th>
+                                                    <th>Email Address</th>
+                                                    <th>Role</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="3" class="text-center text-muted">No search results loaded. Try searching for a user.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Terminal Output showing backend query and logs -->
+                        <div class="lab-terminal">
+                            <div class="terminal-header">
+                                <span class="terminal-circle red"></span>
+                                <span class="terminal-circle yellow"></span>
+                                <span class="terminal-circle green"></span>
+                                <span class="terminal-title">SQLite Database Debug Console</span>
+                            </div>
+                            <div class="terminal-body" id="sqli-console">
+                                <p class="terminal-line system"><span class="prompt">$</span> Server listening on port 3000. Database connected successfully.</p>
+                                <p class="terminal-line system"><span class="prompt">$</span> Awaiting input... Use single quotes to escape queries.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: CROSS-SITE SCRIPTING (XSS) -->
+                <section id="tab-xss" class="tab-content">
+                    <div class="lab-container">
+                        <div class="lab-interactive grid-2col-full">
+                            
+                            <!-- Lab XSS - Reflected -->
+                            <div class="card">
+                                <h3>Portal Search Logs (Reflected XSS)</h3>
+                                <p class="card-description">This box logs portal queries back directly onto the UI. Renders string parameters directly.</p>
+                                <div class="form-group row-group">
+                                    <input type="text" id="xss-reflected-input" placeholder="Search keywords..." class="form-input">
+                                    <button class="btn btn-primary" id="btn-xss-reflected">Log Query</button>
+                                </div>
+                                <div class="xss-reflected-response-box" id="xss-reflected-box">
+                                    <!-- Dynamic content returned here -->
+                                    <span class="text-muted">Awaiting search submission...</span>
+                                </div>
+                            </div>
+
+                            <!-- Lab XSS - Stored -->
+                            <div class="card">
+                                <h3>Public Guestbook (Stored XSS)</h3>
+                                <p class="card-description">Comments left here are saved to the persistent database and rendered on everyone's dashboard. A classic path for cookie hijacking.</p>
+                                <div class="form-group">
+                                    <label for="xss-stored-author">Author / Handle</label>
+                                    <input type="text" id="xss-stored-author" placeholder="Your hacker alias" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="xss-stored-content">Comment</label>
+                                    <textarea id="xss-stored-content" placeholder="Leave your message here..." class="form-input" rows="3"></textarea>
+                                </div>
+                                <button class="btn btn-primary" id="btn-xss-stored-submit">Post Comment</button>
+
+                                <div class="comment-section">
+                                    <h5>Recent Activity</h5>
+                                    <div id="comments-list" class="comments-list">
+                                        <!-- Comments loaded dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: BROKEN AUTHENTICATION -->
+                <section id="tab-auth" class="tab-content">
+                    <div class="lab-container">
+                        <div class="lab-interactive">
+                            
+                            <div class="grid-2col-full">
+                                <!-- Login Box -->
+                                <div class="card">
+                                    <h3>Secure Employee Login</h3>
+                                    <p class="card-description">Access your employee profile. Look out for error-based user enumeration.</p>
+                                    <div class="form-group">
+                                        <label for="auth-username">Username</label>
+                                        <input type="text" id="auth-username" placeholder="Enter username..." class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="auth-password">Password</label>
+                                        <input type="password" id="auth-password" placeholder="Enter password..." class="form-input">
+                                    </div>
+                                    <button class="btn btn-primary" id="btn-auth-login">Login</button>
+                                    
+                                    <div class="auth-message-box" id="auth-login-message"></div>
+                                </div>
+
+                                <!-- Admin Panel (Target) -->
+                                <div class="card" id="admin-panel-card">
+                                    <h3>Administrative Configuration Portal</h3>
+                                    <p class="card-description"><i class="fa-solid fa-lock text-red"></i> Restricted. Available to <code>admin</code> session cookie holders only.</p>
+                                    
+                                    <div class="admin-unlocked-content hidden" id="admin-secret-content">
+                                        <div class="alert alert-success">
+                                            <strong>Authentication Bypassed!</strong> Admin control panel is now unlocked.
+                                        </div>
+                                        <p><strong>System Administrative Flag:</strong> <span class="flag-box">Flag{BROKEN_AUTH_ADMIN_TAKEOVER}</span></p>
+                                        <h5>User Database Backup</h5>
+                                        <div class="table-wrapper">
+                                            <table class="data-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Username</th>
+                                                        <th>Password</th>
+                                                        <th>Role</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr><td>1</td><td>admin</td><td>adminPassword123!</td><td>admin</td></tr>
+                                                    <tr><td>2</td><td>alice</td><td>password123</td><td>user</td></tr>
+                                                    <tr><td>3</td><td>bob</td><td>qwerty</td><td>user</td></tr>
+                                                    <tr><td>4</td><td>guest</td><td>guest</td><td>user</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="admin-locked-content" id="admin-locked-message">
+                                        <div class="alert alert-danger">
+                                            <strong>Access Denied!</strong> Your cookie signature does not belong to user 'admin'.
+                                        </div>
+                                        <p class="text-muted">Modify your <code>session</code> cookie using Burp Suite or browser inspector to access this administration page.</p>
+                                    </div>
+
+                                    <button class="btn btn-outline btn-small mt-3" id="btn-load-admin-data">Fetch Admin Config API</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Console showing cookie details -->
+                        <div class="lab-terminal">
+                            <div class="terminal-header">
+                                <span class="terminal-circle red"></span>
+                                <span class="terminal-circle yellow"></span>
+                                <span class="terminal-circle green"></span>
+                                <span class="terminal-title">Cookie & Session Inspector</span>
+                            </div>
+                            <div class="terminal-body" id="auth-cookie-console">
+                                <p class="terminal-line"><span class="text-cyan">document.cookie</span> = <span id="current-cookie-display" class="text-green">No session cookies set.</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: COMMAND INJECTION -->
+                <section id="tab-ping" class="tab-content">
+                    <div class="lab-container">
+                        <div class="lab-interactive">
+                            <div class="card">
+                                <h3>Network Troubleshooting Service</h3>
+                                <p class="card-description">Input an IP address or hostname to verify if a remote host is alive. This tool runs <code>ping -c 3 [host]</code> on our backend Linux server.</p>
+                                
+                                <div class="form-group row-group">
+                                    <input type="text" id="ping-ip-input" placeholder="e.g. 8.8.8.8 or 127.0.0.1" class="form-input">
+                                    <button class="btn btn-danger" id="btn-ping-submit"><i class="fa-solid fa-network-wired"></i> Execute Ping</button>
+                                </div>
+
+                                <div class="alert alert-info">
+                                    💡 <strong>Vulnerability Tip:</strong> Commands on Unix shells are chained using delimiters. Explore `;`, `&&`, or `|` to run secondary console shell commands.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Terminal displaying the ping command and stdout -->
+                        <div class="lab-terminal">
+                            <div class="terminal-header">
+                                <span class="terminal-circle red"></span>
+                                <span class="terminal-circle yellow"></span>
+                                <span class="terminal-circle green"></span>
+                                <span class="terminal-title">Remote Linux Server Terminal</span>
+                            </div>
+                            <div class="terminal-body terminal-code-font" id="ping-console">
+                                <p class="terminal-line system"><span class="prompt">guest@cyberseclab-host:~$</span> systemctl status ping-service</p>
+                                <p class="terminal-line text-green">● ping-service.service - CyberSecLab Remote Ping Handler</p>
+                                <p class="terminal-line text-green">   Active: active (running) since Wed 2026-06-04 10:00:00 UTC</p>
+                                <p class="terminal-line"><span class="prompt">guest@cyberseclab-host:~$</span> </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: IDOR -->
+                <section id="tab-idor" class="tab-content">
+                    <div class="lab-container">
+                        <div class="lab-interactive">
+                            <div class="card">
+                                <h3>Invoice & Financial Records Portal</h3>
+                                <p class="card-description">Welcome back, <strong>Alice (user_id: 2)</strong>! Below are your registered transactions and invoices.</p>
+                                
+                                <div class="idor-invoice-summary">
+                                    <h5>Your Account Invoices</h5>
+                                    <ul class="invoice-list">
+                                        <li>
+                                            <span>Invoice #1001 - Cloud Server Hosting (2026-05-10)</span>
+                                            <button class="btn btn-small btn-outline" onclick="loadInvoice(1001)">View Invoice</button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="idor-fetch-box mt-4">
+                                    <h5>Fetch Invoice Document by ID</h5>
+                                    <div class="form-group row-group">
+                                        <input type="number" id="idor-invoice-id-input" value="1001" class="form-input">
+                                        <button class="btn btn-primary" id="btn-idor-fetch">Get Invoice JSON</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Invoice Display Box -->
+                                <div class="invoice-display-card hidden" id="invoice-display-card">
+                                    <div class="invoice-card-header">
+                                        <span class="invoice-number" id="inv-num">Invoice #1001</span>
+                                        <span class="invoice-date" id="inv-date">2026-05-10</span>
+                                    </div>
+                                    <div class="invoice-card-body">
+                                        <div class="inv-row">
+                                            <span class="inv-label">Customer ID:</span>
+                                            <span class="inv-value" id="inv-uid">2</span>
+                                        </div>
+                                        <div class="inv-row">
+                                            <span class="inv-label">Details / Description:</span>
+                                            <span class="inv-value" id="inv-desc">Cloud Server Hosting (Alice)</span>
+                                        </div>
+                                        <hr class="inv-divider">
+                                        <div class="inv-row inv-total-row">
+                                            <span class="inv-label">Total Amount Charged:</span>
+                                            <span class="inv-value text-green" id="inv-amount">$120.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <!-- HTTP Requests/Response console -->
+                        <div class="lab-terminal">
+                            <div class="terminal-header">
+                                <span class="terminal-circle red"></span>
+                                <span class="terminal-circle yellow"></span>
+                                <span class="terminal-circle green"></span>
+                                <span class="terminal-title">API Response Inspector</span>
+                            </div>
+                            <div class="terminal-body" id="idor-api-console">
+                                <p class="terminal-line"><span class="text-cyan">GET /api/invoice?id=1001</span></p>
+                                <p class="terminal-line text-green">HTTP/1.1 200 OK</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB: TOOLS SETUP GUIDE -->
+                <section id="tab-guide" class="tab-content">
+                    <div class="card">
+                        <h3>Vulnerability Verification & Tools Setup Guide</h3>
+                        <p class="card-description">Learn how to configure your security software suite to inspect, identify, and audit these vulnerabilities.</p>
+
+                        <div class="guide-section">
+                            <h4><i class="fa-brands fa-docker text-cyan"></i> 1. Docker Setup</h4>
+                            <p>Deploy the application locally in an isolated networking environment:</p>
+                            <pre><code># Build and run the container
+docker compose up --build
+
+# Verify container is running
+docker ps</code></pre>
+                            <p>Once up, the lab is reachable at <code>http://localhost:3000</code>.</p>
+                        </div>
+
+                        <div class="guide-section">
+                            <h4><i class="fa-solid fa-server text-cyan"></i> 2. Reconnaissance with nmap</h4>
+                            <p>Verify active ports, OS classification, and services running inside the container:</p>
+                            <pre><code># Scan local port 3000 to identify service and version details
+nmap -A -p 3000 localhost
+
+# Scan for common HTTP vulnerabilities on port 3000
+nmap --script http-enum,http-title -p 3000 localhost</code></pre>
+                        </div>
+
+                        <div class="guide-section">
+                            <h4><i class="fa-solid fa-ghost text-cyan"></i> 3. Intercepting Requests with Burp Suite / OWASP ZAP</h4>
+                            <p>To inspect and edit parameters, cookies, and payloads before they reach Node.js:</p>
+                            <ol>
+                                <li>Launch Burp Suite or OWASP ZAP on your host/Kali Linux VM.</li>
+                                <li>Configure your web browser to proxy traffic through the local proxy listener (defaults: <code>127.0.0.1:8080</code> for Burp, <code>127.0.0.1:8090</code> for ZAP). Or use Burp's built-in Chromium browser (easiest: no proxy setup required).</li>
+                                <li>Turn <strong>Intercept ON</strong> in Burp (Proxy -> Intercept).</li>
+                                <li>Trigger any action in this lab. Edit the parameters in transit (e.g. changing SQL inputs or cookies) and click <strong>Forward</strong>.</li>
+                            </ol>
+                        </div>
+
+                        <div class="guide-section">
+                            <h4><i class="fa-solid fa-network-wired text-cyan"></i> 4. Packet Captures with Wireshark</h4>
+                            <p>Wireshark captures unencrypted HTTP traffic sent over the virtual docker bridge:</p>
+                            <ol>
+                                <li>Identify your Docker bridge interface (usually <code>docker0</code> on Linux, or inspect loopback <code>lo</code> / localhost interface).</li>
+                                <li>Launch Wireshark (run as administrator/root) and double click the target network interface.</li>
+                                <li>Set a filter to isolate only port 3000: <code>tcp.port == 3000</code>.</li>
+                                <li>Perform actions in the Broken Authentication lab. Right click any captured TCP payload, and select <strong>Follow -> TCP Stream</strong>. Observe plaintext credentials and cookie variables traveling across the network!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+        </main>
+
+        <!-- Right Retractable Panel for Hints & Solutions (Sleek Drawer layout) -->
+        <aside class="hints-drawer" id="hints-drawer">
+            <div class="drawer-header">
+                <h3><i class="fa-solid fa-terminal text-red"></i> Lab Assistance Panel</h3>
+                <button class="btn-close-drawer" id="btn-close-hints"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="drawer-content">
+                <div class="active-hints-content" id="hints-content-box">
+                    <!-- Dynamic hints content will be loaded here based on active tab -->
+                    <p class="text-muted">Select a laboratory from the sidebar to display vulnerability tips, tool details, and exploitation solutions.</p>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Frontend logic script -->
+    <script src="js/app.js"></script>
+</body>
+</html>
